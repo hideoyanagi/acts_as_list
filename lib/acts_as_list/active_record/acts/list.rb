@@ -228,20 +228,20 @@ module ActiveRecord
           save!
         end
 
+				def add_to_list_top
+					increment_positions_on_all_items
+					self[position_column] = acts_as_list_top
+				end
+
+				def add_to_list_bottom
+					if not_in_list? || default_position?
+						self[position_column] = bottom_position_in_list.to_i + 1
+					else
+						increment_positions_on_lower_items(self[position_column])
+					end
+				end
+
         private
-          def add_to_list_top
-            increment_positions_on_all_items
-            self[position_column] = acts_as_list_top
-          end
-
-          def add_to_list_bottom
-            if not_in_list? || default_position?
-              self[position_column] = bottom_position_in_list.to_i + 1
-            else
-              increment_positions_on_lower_items(self[position_column])
-            end
-          end
-
           # Overwrite this method to define the scope of the list changes
           def scope_condition() "1" end
 
