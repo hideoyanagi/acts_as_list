@@ -45,6 +45,12 @@ module ActiveRecord
                 self.class.send(:sanitize_sql_hash_for_conditions, { :#{configuration[:scope].to_s} => send(:#{configuration[:scope].to_s}) })
               end
             )
+          elsif configuration[:scope].is_a?(String)
+            scope_condition_method = %(
+              def scope_condition
+                self.class.send(:sanitize_sql_hash_for_conditions, { :#{configuration[:scope].to_s} => send(:#{configuration[:scope].to_s}) })
+              end
+            )
           elsif configuration[:scope].is_a?(Array)
             scope_condition_method = %(
               def scope_condition
