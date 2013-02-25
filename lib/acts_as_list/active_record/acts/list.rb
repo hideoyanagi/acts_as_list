@@ -249,7 +249,7 @@ module ActiveRecord
           #   bottom_position_in_list    # => 2
           def bottom_position_in_list(except = nil)
             item = bottom_item(except)
-            item ? item.send(position_column) : acts_as_list_top # - 1
+            item ? item.send(position_column) : acts_as_list_top - 1
           end
 
           # Returns the bottom item
